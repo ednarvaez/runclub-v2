@@ -1,0 +1,26 @@
+{
+  "env": {
+    "GOOGLE_SHEETS_PRIVATE_KEY": "@google-sheets-private-key",
+    "GOOGLE_SHEETS_CLIENT_EMAIL": "@google-sheets-client-email",
+    "GOOGLE_SHEETS_SHEET_ID": "@google-sheets-sheet-id"
+  },
+  "functions": {
+    "src/app/api/**": {
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/sheets/sync",
+      "schedule": "0 */6 * * *"
+    }
+  ],
+  "regions": ["iad1"],
+  "framework": "nextjs"
+}

@@ -1,0 +1,161 @@
+
+> runclub-directory@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.4.4 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://10.20.9.36:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 941ms
+ ○ Compiling /api/sheets/sync ...
+ ✓ Compiled /api/sheets/sync in 2.8s
+Error fetching from Google Sheets: Error: error:1E08010C:DECODER routines::unsupported
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at async fetchRunClubsFromSheets (src/lib/googleSheets.ts:49:21)
+    at async GET (src/app/api/sheets/sync/route.ts:6:18)
+  47 |     const sheets = google.sheets({ version: 'v4', auth });
+  48 |
+> 49 |     const response = await sheets.spreadsheets.values.get({
+     |                     ^
+  50 |       spreadsheetId: SHEET_ID,
+  51 |       range: 'Sheet1!A:Q', // Adjust range based on your sheet structure
+  52 |     }); {
+  library: 'DECODER routines',
+  reason: 'unsupported',
+  code: 'ERR_OSSL_UNSUPPORTED'
+}
+Google Sheets sync error: Error: error:1E08010C:DECODER routines::unsupported
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at async fetchRunClubsFromSheets (src/lib/googleSheets.ts:49:21)
+    at async GET (src/app/api/sheets/sync/route.ts:6:18)
+  47 |     const sheets = google.sheets({ version: 'v4', auth });
+  48 |
+> 49 |     const response = await sheets.spreadsheets.values.get({
+     |                     ^
+  50 |       spreadsheetId: SHEET_ID,
+  51 |       range: 'Sheet1!A:Q', // Adjust range based on your sheet structure
+  52 |     }); {
+  library: 'DECODER routines',
+  reason: 'unsupported',
+  code: 'ERR_OSSL_UNSUPPORTED'
+}
+ GET /api/sheets/sync 500 in 4037ms
+ ○ Compiling / ...
+ ✓ Compiled / in 4.5s
+Error fetching from Google Sheets: Error: error:1E08010C:DECODER routines::unsupported
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at async fetchRunClubsFromSheets (src/lib/googleSheets.ts:49:21)
+    at async getAllRunClubs (src/lib/runclubs.ts:61:22)
+    at async getFeaturedRunClubs (src/lib/runclubs.ts:155:16)
+    at async Home (src/app/page.tsx:11:24)
+  47 |     const sheets = google.sheets({ version: 'v4', auth });
+  48 |
+> 49 |     const response = await sheets.spreadsheets.values.get({
+     |                     ^
+  50 |       spreadsheetId: SHEET_ID,
+  51 |       range: 'Sheet1!A:Q', // Adjust range based on your sheet structure
+  52 |     }); {
+  library: 'DECODER routines',
+  reason: 'unsupported',
+  code: 'ERR_OSSL_UNSUPPORTED'
+}
+Google Sheets not available, using fallback data: error:1E08010C:DECODER routines::unsupported
+ GET / 200 in 5891ms
+ ✓ Compiled /favicon.ico in 163ms
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 418ms
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1544913938-d00ddaf2e19b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 404
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1461731449317-d19e139fb625?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 404
+ ○ Compiling /runclub/[id] ...
+ ✓ Compiled /runclub/[id] in 1130ms
+ GET /runclub/fallback-6 200 in 2361ms
+ GET /runclub/fallback-6 200 in 86ms
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1544913938-d00ddaf2e19b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 404
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1461731449317-d19e139fb625?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 404
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1544913938-d00ddaf2e19b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 404
+ ✓ Compiled in 154ms
+ ✓ Compiled / in 46ms
+Error fetching from Google Sheets: Error: error:1E08010C:DECODER routines::unsupported
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at async fetchRunClubsFromSheets (src/lib/googleSheets.ts:49:21)
+    at async getAllRunClubs (src/lib/runclubs.ts:61:22)
+    at async getFeaturedRunClubs (src/lib/runclubs.ts:155:16)
+    at async Home (src/app/page.tsx:11:24)
+  47 |     const sheets = google.sheets({ version: 'v4', auth });
+  48 |
+> 49 |     const response = await sheets.spreadsheets.values.get({
+     |                     ^
+  50 |       spreadsheetId: SHEET_ID,
+  51 |       range: 'Sheet1!A:Q', // Adjust range based on your sheet structure
+  52 |     }); {
+  library: 'DECODER routines',
+  reason: 'unsupported',
+  code: 'ERR_OSSL_UNSUPPORTED'
+}
+Google Sheets not available, using fallback data: error:1E08010C:DECODER routines::unsupported
+ GET / 200 in 1777ms
+ ✓ Compiled in 115ms
+ ✓ Compiled / in 33ms
+Error fetching from Google Sheets: Error: error:1E08010C:DECODER routines::unsupported
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at async fetchRunClubsFromSheets (src/lib/googleSheets.ts:49:21)
+    at async getAllRunClubs (src/lib/runclubs.ts:61:22)
+    at async getFeaturedRunClubs (src/lib/runclubs.ts:155:16)
+    at async Home (src/app/page.tsx:11:24)
+  47 |     const sheets = google.sheets({ version: 'v4', auth });
+  48 |
+> 49 |     const response = await sheets.spreadsheets.values.get({
+     |                     ^
+  50 |       spreadsheetId: SHEET_ID,
+  51 |       range: 'Sheet1!A:Q', // Adjust range based on your sheet structure
+  52 |     }); {
+  library: 'DECODER routines',
+  reason: 'unsupported',
+  code: 'ERR_OSSL_UNSUPPORTED'
+}
+Google Sheets not available, using fallback data: error:1E08010C:DECODER routines::unsupported
+ GET / 200 in 1028ms
+ GET / 200 in 774ms
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1544913938-d00ddaf2e19b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 404
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1461731449317-d19e139fb625?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 404
+ GET / 200 in 368ms
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1461731449317-d19e139fb625?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 404
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1544913938-d00ddaf2e19b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 404
+   Reload env: .env.local
+Error fetching from Google Sheets: Error: error:1E08010C:DECODER routines::unsupported
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
+    at async fetchRunClubsFromSheets (src/lib/googleSheets.ts:49:21)
+    at async getAllRunClubs (src/lib/runclubs.ts:61:22)
+    at async getFeaturedRunClubs (src/lib/runclubs.ts:155:16)
+    at async Home (src/app/page.tsx:11:24)
+  47 |     const sheets = google.sheets({ version: 'v4', auth });
+  48 |
+> 49 |     const response = await sheets.spreadsheets.values.get({
+     |                     ^
+  50 |       spreadsheetId: SHEET_ID,
+  51 |       range: 'Sheet1!A:Q', // Adjust range based on your sheet structure
+  52 |     }); {
+  library: 'DECODER routines',
+  reason: 'unsupported',
+  code: 'ERR_OSSL_UNSUPPORTED'
+}
+Google Sheets not available, using fallback data: error:1E08010C:DECODER routines::unsupported
+ GET / 200 in 3707ms
+ GET / 200 in 696ms
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1461731449317-d19e139fb625?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 404
+ ⨯ upstream image response failed for https://images.unsplash.com/photo-1544913938-d00ddaf2e19b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80 404
+ GET /favicon.ico?favicon.45db1c09.ico 200 in 340ms
+[?25h
