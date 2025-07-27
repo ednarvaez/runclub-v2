@@ -162,31 +162,57 @@ export async function getFeaturedRunClubs(): Promise<RunClub[]> {
 }
 
 export function getRunClubImageUrl(club: RunClub): string {
-  // Check if club.photo is a valid URL
+  // Check if club.photo is a valid URL and likely to work
   if (club.photo) {
     try {
-      new URL(club.photo);
-      return club.photo; // Valid URL
+      const photoUrl = new URL(club.photo);
+      
+      // Check if it's a Google Photos URL that's likely to work
+      if (photoUrl.hostname === 'lh3.googleusercontent.com') {
+        // Only use /p/ format URLs as they work reliably
+        // Avoid gps-cs-s URLs as they return 403 errors
+        if (club.photo.includes('/p/')) {
+          return club.photo; // Working Google Photos URL format
+        }
+        // Fall through to fallback for gps-cs-s URLs and other broken formats
+      } else if (photoUrl.hostname !== 'streetviewpixels-pa.googleapis.com') {
+        // Use non-Google URLs (but avoid Street View thumbnails which also fail)
+        return club.photo;
+      }
     } catch {
       // Invalid URL, fall through to fallback images
     }
   }
 
-  // Fallback to curated running images based on club ID
+  // Expanded set of diverse running images
   const fallbackImages = [
-    'https://images.unsplash.com/photo-1544913938-d00ddaf2e19b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1461731449317-d19e139fb625?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1486218119243-13883505764c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1502904550040-7534597429ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1566027964239-ede2e76370e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    'https://images.unsplash.com/photo-1544913938-d00ddaf2e19b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Group running city
+    'https://images.unsplash.com/photo-1461731449317-d19e139fb625?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Marathon runners
+    'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Trail running
+    'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Urban running
+    'https://images.unsplash.com/photo-1486218119243-13883505764c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Park running
+    'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Beach running
+    'https://images.unsplash.com/photo-1502904550040-7534597429ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Track running
+    'https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Bridge running
+    'https://images.unsplash.com/photo-1566027964239-ede2e76370e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Mountain running
+    'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Group fitness
+    'https://images.unsplash.com/photo-1594736797933-d0201ba8e24a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Women running
+    'https://images.unsplash.com/photo-1571008887538-b36bb32f4571?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Morning run
+    'https://images.unsplash.com/photo-1448387473223-5c37445527e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Runner silhouette
+    'https://images.unsplash.com/photo-1582656975064-04748363d394?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Athletic club
+    'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'  // Running community
   ];
 
-  // Use consistent image for same club
-  const index = club.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % fallbackImages.length;
+  // Use h3 hex code for more consistent selection if available
+  let seedValue = 0;
+  if (club.photo && club.photo.length > 10) {
+    // Use h3 hex code for deterministic selection
+    seedValue = club.photo.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  } else {
+    // Fallback to club ID
+    seedValue = club.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  }
+  
+  const index = seedValue % fallbackImages.length;
   return fallbackImages[index];
 }

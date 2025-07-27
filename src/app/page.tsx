@@ -12,30 +12,50 @@ export default async function Home() {
   
   // Get actual city counts from our data
   const allClubs = await getAllRunClubs();
-  const cityCounts = allClubs.reduce((acc, club) => {
-    acc[club.city] = (acc[club.city] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  
+  // Count clubs that would match each borough search
+  const getBoroughCount = (boroughName: string) => {
+    return allClubs.filter(club => {
+      const cityLower = club.city.toLowerCase();
+      const boroughLower = boroughName.toLowerCase();
+      
+      // Handle specific borough mappings
+      if (boroughLower === 'manhattan') {
+        return cityLower === 'new york' || cityLower.includes('manhattan');
+      }
+      if (boroughLower === 'queens') {
+        return cityLower.includes('queens') || cityLower === 'long island city' || cityLower === 'jamaica';
+      }
+      if (boroughLower === 'brooklyn') {
+        return cityLower === 'brooklyn' || cityLower.includes('brooklyn');
+      }
+      if (boroughLower === 'bronx') {
+        return cityLower === 'bronx' || cityLower.includes('bronx');
+      }
+      
+      return cityLower === boroughLower || cityLower.includes(boroughLower);
+    }).length;
+  };
   
   const majorCities = [
     { 
       name: 'Manhattan', 
-      count: `${cityCounts['Manhattan'] || 0} club${cityCounts['Manhattan'] === 1 ? '' : 's'}`, 
+      count: `${getBoroughCount('Manhattan')} club${getBoroughCount('Manhattan') === 1 ? '' : 's'}`, 
       image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400&h=300&fit=crop' 
     },
     { 
       name: 'Brooklyn', 
-      count: `${(cityCounts['Brooklyn'] || 0) + (cityCounts['Downtown Brooklyn'] || 0) + (cityCounts['Carroll Gardens'] || 0)} club${((cityCounts['Brooklyn'] || 0) + (cityCounts['Downtown Brooklyn'] || 0) + (cityCounts['Carroll Gardens'] || 0)) === 1 ? '' : 's'}`, 
+      count: `${getBoroughCount('Brooklyn')} club${getBoroughCount('Brooklyn') === 1 ? '' : 's'}`, 
       image: 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?w=400&h=300&fit=crop' 
     },
     { 
       name: 'Queens', 
-      count: `${(cityCounts['Queens'] || 0) + (cityCounts['Long Island City'] || 0) + (cityCounts['Jamaica'] || 0)} club${((cityCounts['Queens'] || 0) + (cityCounts['Long Island City'] || 0) + (cityCounts['Jamaica'] || 0)) === 1 ? '' : 's'}`, 
+      count: `${getBoroughCount('Queens')} club${getBoroughCount('Queens') === 1 ? '' : 's'}`, 
       image: 'https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?w=400&h=300&fit=crop' 
     },
     { 
       name: 'Bronx', 
-      count: `${(cityCounts['Bronx'] || 0) + (cityCounts['East Bronx'] || 0) + (cityCounts['West Bronx'] || 0)} club${((cityCounts['Bronx'] || 0) + (cityCounts['East Bronx'] || 0) + (cityCounts['West Bronx'] || 0)) === 1 ? '' : 's'}`, 
+      count: `${getBoroughCount('Bronx')} club${getBoroughCount('Bronx') === 1 ? '' : 's'}`, 
       image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&h=300&fit=crop' 
     },
   ].filter(city => parseInt(city.count) > 0); // Only show cities with clubs

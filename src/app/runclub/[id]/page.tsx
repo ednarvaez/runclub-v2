@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, MapPin, Phone, Mail, Globe, Users, Navigation } from 'lucide-react';
+import { ArrowLeft, MapPin, Phone, Mail, Globe, Users, Navigation, Star } from 'lucide-react';
 import { getRunClubById, getAllRunClubs, getRunClubImageUrl } from '@/lib/runclubs';
 import StarRating from '@/components/StarRating';
 import MapEmbed from '@/components/MapEmbed';
@@ -163,11 +163,43 @@ export default async function RunClubPage({ params }: RunClubPageProps) {
                 </div>
               </div>
 
-              <div className="text-center py-8 text-gray-500">
-                <p>Review system coming soon!</p>
-                <p className="text-sm mt-2">
-                  Contact the club directly for more information.
-                </p>
+              {/* Review Actions */}
+              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                {club.reviews_link && (
+                  <a
+                    href={club.reviews_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors"
+                  >
+                    <Star className="h-5 w-5 mr-2" />
+                    View Google Reviews ({club.reviews})
+                  </a>
+                )}
+                
+                <div className="text-center">
+                  <p className="text-gray-600 text-sm">
+                    Reviews are sourced from Google My Business
+                  </p>
+                  {!club.reviews_link && (
+                    <p className="text-gray-500 text-sm mt-1">
+                      No public reviews available for this club
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Sample Review Layout (for future expansion) */}
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  Recent Reviews
+                </h3>
+                <div className="text-center py-6 text-gray-500">
+                  <p>Individual reviews coming soon!</p>
+                  <p className="text-sm mt-1">
+                    For now, view all reviews on Google
+                  </p>
+                </div>
               </div>
             </div>
           </div>

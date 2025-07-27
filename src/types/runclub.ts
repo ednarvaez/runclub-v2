@@ -14,6 +14,7 @@ export interface RunClub {
   photo?: string;
   description?: string;
   email_1?: string;
+  reviews_link?: string;
 }
 
 export interface SearchFilters {
