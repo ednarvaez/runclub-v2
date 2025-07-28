@@ -56,7 +56,7 @@ export default async function Home() {
     { 
       name: 'Bronx', 
       count: `${getBoroughCount('Bronx')} club${getBoroughCount('Bronx') === 1 ? '' : 's'}`, 
-      image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&h=300&fit=crop' 
+      image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop' 
     },
   ].filter(city => parseInt(city.count) > 0); // Only show cities with clubs
 
