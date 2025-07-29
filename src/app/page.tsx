@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -12,9 +14,9 @@ export default function Home() {
           <strong>Success!</strong> Homepage is working.
         </div>
         <div className="mt-4 space-x-4">
-          <a href="/test" className="text-blue-500 hover:underline">Test Page</a>
+          <Link href="/test" className="text-blue-500 hover:underline">Test Page</Link>
           <a href="/api/health" className="text-blue-500 hover:underline">Health Check</a>
-          <a href="/search" className="text-blue-500 hover:underline">Search</a>
+          <Link href="/search" className="text-blue-500 hover:underline">Search</Link>
         </div>
       </div>
     </div>

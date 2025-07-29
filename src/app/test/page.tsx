@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function TestPage() {
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -12,7 +14,7 @@ export default function TestPage() {
           <strong>Success!</strong> The app is deployed correctly.
         </div>
         <div className="mt-4">
-          <a href="/" className="text-blue-500 hover:underline">Go back to homepage</a>
+          <Link href="/" className="text-blue-500 hover:underline">Go back to homepage</Link>
         </div>
       </div>
     </div>
