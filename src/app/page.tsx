@@ -8,10 +8,16 @@ import { getFeaturedRunClubs, getAllRunClubs } from '@/lib/runclubs';
 export const revalidate = 21600;
 
 export default async function Home() {
-  const featuredClubs = await getFeaturedRunClubs();
+  let featuredClubs = [];
+  let allClubs = [];
   
-  // Get actual city counts from our data
-  const allClubs = await getAllRunClubs();
+  try {
+    featuredClubs = await getFeaturedRunClubs();
+    allClubs = await getAllRunClubs();
+  } catch (error) {
+    console.error('Error loading data:', error);
+    // Fall back to empty arrays - homepage will still work
+  }
   
   // Count clubs that would match each borough search
   const getBoroughCount = (boroughName: string) => {
