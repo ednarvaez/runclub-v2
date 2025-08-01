@@ -15,6 +15,7 @@ export default async function Home() {
   try {
     featuredClubs = await getFeaturedRunClubs();
     allClubs = await getAllRunClubs();
+    console.log(`Loaded ${allClubs.length} clubs, ${featuredClubs.length} featured`);
   } catch (error) {
     console.error('Error loading data:', error);
     // Fall back to empty arrays - homepage will still work
@@ -66,6 +67,14 @@ export default async function Home() {
       image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop' 
     },
   ].filter(city => parseInt(city.count) > 0); // Only show cities with clubs
+
+  // If no data loaded, show placeholder cities
+  const displayCities = majorCities.length > 0 ? majorCities : [
+    { name: 'Manhattan', count: 'Loading...', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400&h=300&fit=crop' },
+    { name: 'Brooklyn', count: 'Loading...', image: 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?w=400&h=300&fit=crop' },
+    { name: 'Queens', count: 'Loading...', image: 'https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?w=400&h=300&fit=crop' },
+    { name: 'Bronx', count: 'Loading...', image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop' },
+  ];
 
   return (
     <div className="min-h-screen">
@@ -145,7 +154,7 @@ export default async function Home() {
           </div>
           
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {majorCities.map((city) => (
+            {displayCities.map((city) => (
               <Link
                 key={city.name}
                 href={`/search?location=${encodeURIComponent(city.name)}`}
